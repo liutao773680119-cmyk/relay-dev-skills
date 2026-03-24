@@ -1,0 +1,30 @@
+# Copilot Instructions（Project-wide）
+
+## Single Source of Truth
+- Follow `AGENTS.md` as the primary project rule source.
+- If any instruction conflicts with older local rule files, `AGENTS.md` wins.
+
+## Startup Context Order
+Read in this order before making changes:
+{{startupReadOrderBullets}}
+
+Default reading mode is summary-first, then expand only when needed:
+- Read `AGENTS.md` fully.
+- Read `progress.md` from `Latest Handoff Snapshot` first.
+- Read only the current-task sections from `task_plan.md` and `findings.md` first.
+- Read only the active `Task-ID` row from `task_registry.md` first.
+- Read only the most recent 1-3 relevant entries from `修改记录_会话备忘.md` first.
+- Expand to full-file reading only if the user asks, the context conflicts, or the task cannot be reconstructed from summaries.
+
+## Required Behavior
+1. All responses and task lists must be in `{{profile.language}}`.
+2. Display stock codes as {{profile.stockCodeDigits}}-digit strings.
+3. Use data folder `{{profile.dataDir}}` (do not switch back to `{{profile.legacyDataDir}}`).
+4. Do not claim completion before running verification commands.
+5. For complex tasks, keep `task_plan.md`, `findings.md`, `progress.md` updated.
+
+## Project Baseline
+- Main builder: `{{profile.builderScript}}`
+- Query app: `{{profile.queryScript}}`
+- Model folder: `{{profile.modelDir}}`
+- Output file: `{{profile.outputFile}}`

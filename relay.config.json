@@ -1,0 +1,49 @@
+{
+  "version": "1.1.0",
+  "kitName": "relay-kit-v1",
+  "managedBlock": {
+    "start": "<!-- RELAY:START -->",
+    "end": "<!-- RELAY:END -->"
+  },
+  "defaults": {
+    "language": "中文",
+    "startupReadOrder": [
+      "AGENTS.md",
+      "task_registry.md",
+      "progress.md",
+      "task_plan.md",
+      "findings.md",
+      "修改记录_会话备忘.md"
+    ],
+    "snapshotFields": [
+      "Task-ID",
+      "Task-Name",
+      "Files Changed",
+      "Completed This Session",
+      "Open TODO",
+      "Risks/Blockers",
+      "Next First Command"
+    ],
+    "sessionContextFields": [
+      "Task-ID",
+      "Task-Name",
+      "Developer/Branch(or No-Git)",
+      "Active Goal",
+      "Current Phase",
+      "Next First Command",
+      "Open TODO Top3"
+    ]
+  },
+  "profiles": {
+    "stock-cn": {
+      "language": "中文",
+      "stockCodeDigits": 6,
+      "dataDir": "涨停数据/",
+      "legacyDataDir": "1月涨停数据/",
+      "modelDir": "text2vec_model/",
+      "builderScript": "bert_model/stock_network_v31_windows.py",
+      "queryScript": "bert_model/stock_query_app.py",
+      "outputFile": "master_network_v31.json"
+    }
+  }
+}

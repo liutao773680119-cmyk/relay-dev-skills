@@ -1,0 +1,22 @@
+---
+description: Core project operating rules
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Core Rules
+
+1. 单一规则源：优先遵循 `AGENTS.md`，与其他规则冲突时以 `AGENTS.md` 为准。
+2. 会话启动时必须读取：`{{startupReadOrderArrow}}`。
+3. 默认读取模式为“摘要优先、按需深读”：
+   - `AGENTS.md` 全文读取；
+   - `progress.md` 先读 `Latest Handoff Snapshot`；
+   - `task_plan.md`、`findings.md` 先读当前任务相关段；
+   - `修改记录_会话备忘.md` 先读最近 1-3 条相关记录；
+   - 仅在用户明确要求、上下文冲突或任务无法从摘要恢复时，才扩大到全文读取。
+4. 会话结束前必须更新 `progress.md` 顶部 `Latest Handoff Snapshot`。
+5. 输出语言必须为 `{{profile.language}}`。
+6. 股票代码对外展示必须为 {{profile.stockCodeDigits}} 位字符串，不足前补 0。
+7. 路径基线：数据目录 `{{profile.dataDir}}`，不得回写旧路径 `{{profile.legacyDataDir}}`。
+8. 未执行验证命令前，不得声称“已完成”。
+9. 复杂任务必须维护 `task_plan.md / findings.md / progress.md`。

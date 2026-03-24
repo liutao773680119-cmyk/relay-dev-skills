@@ -1,0 +1,71 @@
+模型接力开发_固定提示词与命令（可直接复制）
+
+常用中文话术（可直接说）
+- `接手这个项目，按接力开发规则来`
+- `给这个项目初始化接力开发`
+- `重新同步当前任务`
+- `做一次标准交接`
+- `按接力开发流程处理这个项目`
+
+1) 项目启动（首次进入/新会话）
+可直接开场粘贴：`本会话 Task-ID=TYYYYMMDD-01，Task-Name=（填写本轮问题）；按 AGENTS.md 启动顺序接管并开始执行。`
+按 AGENTS.md 启动顺序读取 AGENTS.md、task_registry.md、progress.md、task_plan.md、findings.md、修改记录_会话备忘.md；
+先从 task_registry.md 选择或创建当前 Task-ID（若无则新建），并声明 Task-Name；
+先输出一段“Session Context”汇总（Task-ID、Task-Name、Developer/Branch or No-Git、Active Goal、Current Phase、Next First Command、Open TODO Top3）；
+执行启动检查（Get-Location、Get-ChildItem -Force、if (Test-Path .git) { git status --short } else { 'NO_GIT_REPO' }、python -V）并回报结果；
+然后根据 task_plan.md 的 Current Phase 开始执行下一步最小可执行任务（仅限当前 Task-ID）。
+
+2) 切换前结束（软件切换/模型切换都用）
+准备切换。请先更新 progress.md 顶部 Latest Handoff Snapshot（Task-ID、Task-Name、Files Changed、Completed This Session、Open TODO、Risks/Blockers、Next First Command）；
+再在 修改记录_会话备忘.md 追加一条“Session Record”（Task-ID、Task-Name、本轮目标、已完成、未完成、关键命令/结果、下一步）；
+并更新 task_registry.md 当前 Task-ID 对应行（Status、Last Update、Next First Command）；
+最后输出一句交接摘要并停止执行。
+
+3) 切换后开场（跨软件接力）
+我刚从另一个软件切换过来。按 AGENTS.md 启动顺序读取上下文，并先锁定同一个 Task-ID；
+先复述 Task-ID、Active Goal、Current Phase、Next First Command，并给出“Session Context”汇总（含 Open TODO Top3）；
+然后执行 Next First Command，并继续当前任务。
+
+4) 切换后开场（同软件内换模型，如 Gemini -> Codex）
+我刚在同一软件内从另一个模型切换过来（如 Gemini -> Codex）。按 AGENTS.md 启动顺序接管上下文，并先锁定同一个 Task-ID；
+先复述 Task-ID、Active Goal、Current Phase、Next First Command，并给出“Session Context”汇总（含 Open TODO Top3）；
+再继续未完成任务，不要重复已完成步骤。
+
+----------------------------------------
+补充场景（建议常备）
+
+5) 故障排查开场（Debug）
+进入故障模式。按 systematic-debugging 执行：先复现、再定位根因、再最小修复；不要先改代码。
+
+6) 需求变更开场（Scope Change）
+需求变更。先更新 task_plan.md 和 findings.md（目标/范围/风险），再给我新的最小执行步骤。
+
+7) 完成前验收（Verification）
+准备收尾。先运行验证命令并贴结果，再判断是否完成；最后更新 progress.md 的 Latest Handoff Snapshot。
+
+8) 上下文漂移纠偏（Re-sync）
+你可能上下文漂移了。请重新按 AGENTS.md 启动顺序读取，并复述 Task-ID、Active Goal、Current Phase、Next First Command。
+
+9) 阻塞回报（Blocked）
+若读取失败、命令失败或关键文件缺失，立即停止执行并按固定格式输出：
+Status: BLOCKED
+Failed Step:
+Reason:
+Missing File / Failed Command:
+Suggested Fix:
+Next First Command (Fallback):
+
+10) 同软件同模型跨会话接力（重点）
+我在同一个软件、同一个模型里切到了另一个会话，但要处理【Task-ID=XXX】。
+请先读取 AGENTS.md、task_registry.md、progress.md、task_plan.md、findings.md、修改记录_会话备忘.md；
+仅保留 Task-ID=XXX 的上下文并标记其他任务为 IGNORE；
+输出该 Task-ID 的 Session Context（Task-ID、Task-Name、Current Phase、Next First Command、Open TODO Top3）并继续执行。
+
+----------------------------------------
+固定命令（建议每次会话使用）
+
+A) 预检
+powershell -ExecutionPolicy Bypass -File scripts/preflight.ps1
+
+B) 技能同步（你更新全局 skills 后执行）
+powershell -ExecutionPolicy Bypass -File scripts/sync_skills.ps1

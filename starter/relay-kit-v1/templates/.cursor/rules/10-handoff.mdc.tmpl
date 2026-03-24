@@ -1,0 +1,24 @@
+---
+description: Handoff and context recovery protocol
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Handoff Protocol
+
+每次接手先完成：
+1. 从 `progress.md` 的 `Latest Handoff Snapshot` 恢复当前目标。
+2. 在 `task_registry.md` 锁定当前 `Task-ID`。
+3. 在 `task_plan.md` 确认该任务的当前阶段、未完成项和风险。
+4. 在 `findings.md` 确认已知事实与待验证项。
+5. 在 `修改记录_会话备忘.md` 读取最近 1-3 条相关 `Session Record`。
+6. 若以上信息不足，再按需扩大读取范围。
+
+默认禁止因“接手”动作机械全文通读长文件；除非用户明确要求、上下文存在冲突，或当前任务无法从摘要恢复。
+
+每次交接前必须写明：
+1. 本轮改动文件
+2. 已完成事项
+3. 未完成事项
+4. 风险/阻塞
+5. 下一步第一条命令
