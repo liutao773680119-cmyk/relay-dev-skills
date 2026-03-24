@@ -1,5 +1,7 @@
 ﻿# 接力开发：跨模型 / 跨账号 / 跨工具协作母包
 
+![Relay Dev Banner](assets/relay-dev-banner.svg)
+
 ![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
 ![Skills](https://img.shields.io/badge/skills-6-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
@@ -9,6 +11,7 @@
 - 仓库地址：[relay-dev-skills](https://github.com/liutao773680119-cmyk/relay-dev-skills)
 - 英文简介：[README_EN.md](README_EN.md)
 - 使用演示：[USAGE_DEMO.md](USAGE_DEMO.md)
+- 贡献说明：[CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## 3 步开始
 
