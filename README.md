@@ -10,6 +10,20 @@
 - 英文简介：[README_EN.md](README_EN.md)
 - 使用演示：[USAGE_DEMO.md](USAGE_DEMO.md)
 
+## 3 步开始
+
+```mermaid
+flowchart LR
+    A["安装全局 Skills"] --> B["初始化项目模板"]
+    B --> C["直接用中文话术接手 / 交接 / 重同步"]
+```
+
+最短上手路径：
+
+1. 安装全局 skills
+2. 给你的项目铺接力开发模板
+3. 在新会话里直接说：`接手这个项目，按接力开发规则来`
+
 ## 为什么需要它
 
 当你在同一个项目里频繁切换这些场景时，问题会反复出现：
@@ -186,6 +200,18 @@ scripts/relay_init.ps1     # 项目模板初始化入口
 推荐 GitHub 仓库描述：
 
 `一套面向 Codex、Cursor、Claude Code 的接力开发 skills 与项目模板，支持中文自然语言触发、多会话上下文恢复和标准交接。`
+
+推荐 GitHub Topics：
+
+- `codex`
+- `claude-code`
+- `cursor`
+- `ai-workflow`
+- `developer-tools`
+- `prompt-engineering`
+- `agent-skills`
+- `context-handoff`
+- `multi-session`
 
 ## 首次发布信息
 

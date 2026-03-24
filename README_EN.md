@@ -15,6 +15,20 @@ When people develop the same project across different AI tools, the failure mode
 
 This repo turns that into a repeatable workflow.
 
+## 3-Step Start
+
+```mermaid
+flowchart LR
+    A["Install Global Skills"] --> B["Initialize Project Template"]
+    B --> C["Use Natural-Language Triggers"]
+```
+
+Minimal path:
+
+1. Install the global skills
+2. Initialize a project with the relay template
+3. Start a new session and trigger the workflow
+
 ## What This Repo Provides
 
 1. Global relay skills  
