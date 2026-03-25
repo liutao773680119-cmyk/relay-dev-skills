@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Sync skills from one primary source and optional extra sources to project targets.
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import shutil
+import sys
+from pathlib import Path
+from typing import Iterable
+
+
+def _resolve_default_source() -> Path:
+    user_profile = os.environ.get("USERPROFILE", str(Path.home()))
+    return Path(user_profile) / ".codex" / "skills"
+
+
+def _copy_skill_dirs(source: Path, target: Path) -> int:
+    target.mkdir(parents=True, exist_ok=True)
+    copied = 0
+
+    if not source.exists() or not source.is_dir():
+        print(f"[WARN] source not found, skipped: {source}")
+        return copied
+
+    for item in source.iterdir():
+        if not item.is_dir():
+            continue
+        if item.name == ".system":
+            continue
+
+        dst = target / item.name
+        if dst.exists():
+            shutil.rmtree(dst)
+        shutil.copytree(item, dst)
+        copied += 1
+        print(f"[OK] copied: {item.name} -> {target}")
+
+    return copied
+
+
+def _resolve_sources(primary: Path, extra_sources: Iterable[str]) -> list[Path]:
+    sources = [primary]
+    for extra in extra_sources:
+        p = Path(extra)
+        if not p.is_absolute():
+            p = Path.cwd() / p
+        sources.append(p.resolve())
+    return sources
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Sync skills into project folders")
+    parser.add_argument(
+        "--source",
+        default=str(_resolve_default_source()),
+        help="Source skills directory (default: USERPROFILE/.codex/skills)",
+    )
+    parser.add_argument(
+        "--extra-sources",
+        nargs="*",
+        default=[".relay/skills"],
+        help="Optional additional skills sources merged after --source",
+    )
+    parser.add_argument(
+        "--targets",
+        nargs="+",
+        default=[".cursor/skills", ".agent/skills"],
+        help="Target skill directories (space separated)",
+    )
+
+    args = parser.parse_args()
+    source = Path(args.source).resolve()
+    sources = _resolve_sources(source, args.extra_sources)
+
+    total_copied = 0
+    for target_str in args.targets:
+        target = Path(target_str).resolve()
+        target_total = 0
+        print(f"[INFO] syncing target: {target}")
+        for src in sources:
+            copied = _copy_skill_dirs(src, target)
+            target_total += copied
+            total_copied += copied
+            print(f"[DONE] source {src} -> {target}: {copied} skills")
+        print(f"[DONE] target summary: {target_total} skills copied to {target}")
+
+    print(f"\nCompleted. Total copied (across targets): {total_copied}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+

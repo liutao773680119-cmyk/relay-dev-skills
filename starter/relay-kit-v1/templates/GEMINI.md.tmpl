@@ -1,0 +1,15 @@
+# GEMINI.md（Workspace 兼容桥接）
+
+## Rule Source
+- 本项目规则主文件是 `AGENTS.md`。
+- 进入会话后先读取：`{{startupReadOrderArrow}}`。
+
+## Mandatory Constraints
+1. 所有输出使用 `{{profile.language}}`。
+2. 对外展示股票代码统一 {{profile.stockCodeDigits}} 位。
+3. 数据目录使用 `{{profile.dataDir}}`。
+4. 未验证前不得声称完成。
+
+## Handoff
+会话结束前更新 `progress.md` 的 `Latest Handoff Snapshot`，并写入 `修改记录_会话备忘.md` 的 Session Record。
+

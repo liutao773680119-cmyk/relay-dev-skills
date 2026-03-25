@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+
+reports/
+_relay_init_report.json
+
+*.log
+Thumbs.db

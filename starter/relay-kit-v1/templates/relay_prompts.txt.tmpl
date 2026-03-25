@@ -1,0 +1,64 @@
+Relay Development Fixed Prompts and Commands
+
+Chinese natural-language triggers you can say directly:
+- `接手这个项目，按接力开发规则来`
+- `给这个项目初始化接力开发`
+- `重新同步当前任务`
+- `做一次标准交接`
+- `按接力开发流程处理这个项目`
+
+1) Session Start
+Touch context in this order, using summary-first reading by default:
+`AGENTS.md -> task_registry.md -> progress.md -> task_plan.md -> findings.md -> 修改记录_会话备忘.md`
+Default reading granularity:
+- `AGENTS.md`: read fully.
+- `task_registry.md`: read only the active `Task-ID` row first.
+- `progress.md`: read `Latest Handoff Snapshot` first.
+- `task_plan.md`: read the current task section, latest plan, open TODO, and risks first.
+- `findings.md`: read recent facts related to the same `Task-ID` first.
+- `修改记录_会话备忘.md`: read the most recent 1-3 relevant `Session Record` entries first.
+Only expand to full-file reading if the user explicitly asks, the context conflicts, or the current task cannot be reconstructed from summaries.
+Pick or create a Task-ID first and declare Task-Name.
+Then output a "Session Context" summary with:
+- Task-ID / Task-Name
+- Developer/Branch(or No-Git)
+- Active Goal
+- Current Phase
+- Next First Command
+- Open TODO Top3
+Run startup checks and continue from `Current Phase`.
+
+2) Before Handoff Stop
+Update `progress.md` -> `Latest Handoff Snapshot` with:
+`Task-ID, Task-Name, Files Changed, Completed This Session, Open TODO, Risks/Blockers, Next First Command`
+Append one Session Record entry in `修改记录_会话备忘.md`.
+Update the same Task-ID row in `task_registry.md` (Status, Last Update, Next First Command).
+Output a one-line handoff summary and stop.
+
+3) Cross-App Resume
+After switching tools, re-read startup context order with summary-first reading, lock to the same Task-ID, restate Task-ID / Active Goal / Current Phase / Next First Command, then execute Next First Command.
+
+4) In-App Model Switch Resume
+After switching model in the same app, re-read startup context order with summary-first reading, lock to the same Task-ID, restate Task-ID / Active Goal / Current Phase / Next First Command, continue remaining work only.
+
+5) Blocked State Report
+If any required read/check/command fails, stop execution and output:
+Status: BLOCKED
+Failed Step:
+Reason:
+Missing File / Failed Command:
+Suggested Fix:
+Next First Command (Fallback):
+
+6) Same Tool + Same Model + Different Session Resume
+I switched to another session in the same tool and same model for `Task-ID=XXX`.
+Re-read startup context with summary-first reading, keep only this Task-ID context, mark other tasks as `IGNORE`, then continue with this Task-ID only.
+
+----------------------------------------
+Suggested Commands
+
+A) Preflight
+`powershell -ExecutionPolicy Bypass -File scripts/preflight.ps1`
+
+B) Skill Sync
+`powershell -ExecutionPolicy Bypass -File scripts/sync_skills.ps1`
