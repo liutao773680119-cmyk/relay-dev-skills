@@ -10,6 +10,7 @@
 - 当前仓库已经创建、合并远端历史并推送到 GitHub。
 - GitHub Desktop 内置 Git 在 `credential fill` 路径上崩溃，表现为 `-1073741819` / `/dev/tty` prompt 失败。
 - `E:\AI软件\Git\cmd\git.exe` 可正常工作，但需要 ASCII 路径的 askpass 才能稳定非交互认证。
+- 仓库内已新增 `scripts/fix_git_auth.ps1`，并已在当前项目完成实测验证。
 
 ## Assumptions
 - 当前目录将作为后续项目或任务的承载目录。
@@ -17,6 +18,7 @@
 - 后续项目可直接复制当前模板包作为起点。
 - 若要推送 GitHub，需要用户提供仓库上下文或允许在本目录初始化仓库。
 - 当前仓库未来继续使用同一远端。
+- 当前仓库允许将 Windows 非交互推送修复方案沉淀为脚本与文档。
 
 ## Open Questions
 - 是否要把稳定 Git/askpass 方案推广到其他仓库？

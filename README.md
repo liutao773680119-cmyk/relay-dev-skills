@@ -27,6 +27,40 @@ flowchart LR
 2. 给你的项目铺接力开发模板
 3. 在新会话里直接说：`接手这个项目，按接力开发规则来`
 
+## Windows 推送认证修复
+
+如果你在 Windows 上遇到普通 `git push` 失败，并且报错里出现这些关键词：
+
+- `/dev/tty`
+- `failed to execute prompt script`
+- `could not read Username for 'https://github.com'`
+
+通常问题不在仓库权限，而在 Git 的非交互凭据链路。
+
+这个仓库提供了一个可复用修复脚本：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\fix_git_auth.ps1
+```
+
+它会：
+
+1. 在 `C:\Users\<你>\.git-askpass.cmd` 生成 ASCII 路径的 askpass 脚本
+2. 用 `gh auth token` 写入 `~/.git-credentials`
+3. 给当前仓库配置本地 `core.askPass` 和 `credential.helper`
+
+默认使用的稳定 Git 路径是：
+
+```powershell
+E:\AI软件\Git\cmd\git.exe
+```
+
+修复后建议用这条命令验证：
+
+```powershell
+E:\AI软件\Git\cmd\git.exe -C . push -u origin main
+```
+
 ## 为什么需要它
 
 当你在同一个项目里频繁切换这些场景时，问题会反复出现：

@@ -4,6 +4,9 @@
 - Task-ID: `T001`
 - Task-Name: 初始化接力开发模板
 - Files Changed:
+  - `README.md`
+  - `CHANGELOG.md`
+  - `scripts/fix_git_auth.ps1`
   - `progress.md`
   - `task_plan.md`
   - `findings.md`
@@ -11,6 +14,8 @@
   - `修改记录_会话备忘.md`
   - `task_registry.md`
 - Completed This Session:
+  - 新增可复用脚本 `scripts/fix_git_auth.ps1`
+  - 用脚本重新配置当前仓库的 git 认证链路并验证通过
   - 远端 `origin/main` 已推送并与本地 `HEAD` 对齐
   - 确认普通 `git push` 已恢复正常
   - 根因定位为 GitHub Desktop 内置 Git 的 helper/prompt 链不稳定
@@ -78,3 +83,14 @@
   - `task_registry.md`
   - `修改记录_会话备忘.md`
   - `避坑记录.md`
+
+### 2026-03-26 10:16
+- Status: complete
+- Summary:
+  - 新增 `scripts/fix_git_auth.ps1` 作为可复用修复脚本
+  - 在当前仓库实际运行脚本并验证普通 `git push` 成功
+  - 补充 `README.md` 和 `CHANGELOG.md`
+- Files created/modified:
+  - `README.md`
+  - `CHANGELOG.md`
+  - `scripts/fix_git_auth.ps1`

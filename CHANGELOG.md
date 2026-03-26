@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added `scripts/fix_git_auth.ps1` to recover Windows non-interactive git push when helper/prompt chains fail.
+- Documented `/dev/tty` / `failed to execute prompt script` recovery steps in `README.md`.
+
 ## 1.1.0 - 2026-03-24
 
 - Unified relay startup rules to use `summary-first, then expand only when needed`.
