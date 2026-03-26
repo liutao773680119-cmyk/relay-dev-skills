@@ -9,25 +9,24 @@
   - `findings.md`
   - `避坑记录.md`
   - `修改记录_会话备忘.md`
-  - `模板_接力开发增强版/init-project.ps1`
-  - `模板_接力开发增强版/使用说明.md`
+  - `task_registry.md`
 - Completed This Session:
-  - 完成增强版模板包定版
-  - 实测 `init-project.ps1`，确认模板可在新目录初始化成功
-  - 删除演练目录 `演练_模板初始化`
-  - 更新全局 `relay-*` skill 以纳入 `避坑记录.md`
+  - 远端 `origin/main` 已推送并与本地 `HEAD` 对齐
+  - 确认普通 `git push` 已恢复正常
+  - 根因定位为 GitHub Desktop 内置 Git 的 helper/prompt 链不稳定
+  - 为当前仓库切换到 `E:\AI软件\Git\cmd\git.exe` + `C:\Users\Administrator\.git-askpass.cmd`
 - Open TODO:
-  - 提供可推送的 git 仓库或在当前目录初始化 git 并配置远端
-  - 选择要纳入版本控制的文件范围
-  - 推送模板包与交接文件到 GitHub
+  - 如需长期统一修复，可将其他仓库也切到稳定 Git 和 askpass 路径
+  - 如需更优雅方案，可后续继续修 GitHub Desktop 内置 Git 的 credential helper 崩溃问题
+  - 新项目可直接复用 `模板_接力开发增强版`
 - Risks/Blockers:
-  - 当前目录仍是 `No-Git`
-  - 没有远端仓库信息，无法直接推送到 GitHub
-- Next First Command: `if (Test-Path .git) { git status --short; git remote -v } else { 'NO_GIT_REPO' }`
+  - GitHub Desktop 内置 Git 在 `credential fill` / 普通 helper 链上仍可能崩溃
+  - 当前稳定路径依赖本机 `E:\AI软件\Git\cmd\git.exe` 与 `C:\Users\Administrator\.git-askpass.cmd`
+- Next First Command: `E:\AI软件\Git\cmd\git.exe push -u origin main`
 - Known Avoidances:
-  - 当前目录没有实际项目文件前，不要开始代码级分析或测试。
-  - 当前目录不是 git 仓库前，不要假设存在分支、提交或工作树状态。
-  - 在承诺“可以推送 GitHub”前，先验证 `.git` 和 `git remote -v`。
+  - 不要默认依赖 GitHub Desktop 内置 Git 做非交互式凭据操作。
+  - 带中文路径的 askpass 脚本在 Git Bash 下不稳定，优先使用 ASCII 路径。
+  - 推送失败时先区分“仓库未同步”与“凭据链路损坏”，不要混在一起判断。
 
 ## Session Log
 
@@ -65,3 +64,17 @@
   - `避坑记录.md`
   - `模板_接力开发增强版/init-project.ps1`
   - `模板_接力开发增强版/使用说明.md`
+
+### 2026-03-26 10:16
+- Status: complete
+- Summary:
+  - 确认远端 `main` 已同步到本地合并提交
+  - 排查并修复普通 `git push` 的非交互认证失败
+  - 为当前仓库切换到稳定 Git 和 askpass 路径
+- Files created/modified:
+  - `progress.md`
+  - `task_plan.md`
+  - `findings.md`
+  - `task_registry.md`
+  - `修改记录_会话备忘.md`
+  - `避坑记录.md`
